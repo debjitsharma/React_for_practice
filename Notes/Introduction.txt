@@ -1,0 +1,7 @@
+What is React? Why React is known as ‘React’?
+
+it’s a JavaScript library built by Facebook for building user interfaces, especially those that change a lot (think news feeds, dashboards, chat apps). 
+Instead of you manually poking the DOM with document.createElement like a caveman, React handles updating what the user sees whenever the underlying data changes.
+Now, why it’s called React? Because it’s built around reacting to changes in state or data. You don’t tell the browser how to update each little pixel. 
+You just describe what the UI should look like given some state, and React takes care of the rest—reacting whenever the state changes.
+
