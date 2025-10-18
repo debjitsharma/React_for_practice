@@ -1,0 +1,98 @@
+1) Npm doen't stand for node package manager. It doesn't have a full form.
+
+npm is the world's largest Software Registry.
+The registry contains over 800,000 code packages.It's one of the biggest package manager.
+Open-source developers use npm to share software.
+Many organizations also use npm to manage private development.
+
+
+2) package.json is a configuration for npm. It keeps a track of all the dependencies/packages our code is using.
+  a) Whatever packages our project needs, we install those packages using  
+     npm install <packageName>.
+  b) Once package installation is complete, their versions and configuration related information is stored as 
+     dependencies inside package.json file.  
+
+3) package-lock.json: Package-lock.json locks the exact version of packages being used in the project. 
+
+
+4) What is difference between package.json and package.lock.json?
+   
+   In package. json we have information about generic version (approx version) of installed packages whereas in package.lock.json we have
+   information about the specific or exact version of installed packages.
+
+
+5) Integrity in  package.lock.json-- It’s a Subresource Integrity (SRI) hash. Stores the cryptographic hash (checksum) of the tarball’s contents.
+   Think of it as: “This file’s fingerprint must match exactly, otherwise reject it.”
+
+   Tarball-A tarball is basically a squished-up bundle of files.It’s a single archive file, usually ending in .tar or .tgz.
+
+   When we install the package, npm recalculates the hash of what you downloaded and compares it to the one in package-lock.json.
+   a) If they match → the package is authentic and untampered.
+   b) If they don’t match → installation fails because something fishy happened (corruption, malware, etc.).
+
+
+6)  Resolved in package.lock.json-- GIves the precise location of the tarball (.tgz file) that npm downloaded when installing the package. 
+                                    npm’s way of saying: "Hey, when I installed this dependency, I grabbed it from this exact URL." 
+
+
+7)That line — “It was running in my local, I don’t know how it broke in production” — is basically the unofficial motto of every developer ever. 
+    
+    Your package-lock.json stores the exact tarball URL (resolved) and its fingerprint (integrity).
+    When production runs npm install, npm doesn’t just say “give me version 1.2.3.” It says:
+    a) “Give me version 1.2.3 from this exact URL…”
+    b) “…and its content must match this SHA512 hash.”
+    c) If the tarball doesn’t match the fingerprint → install fails immediately.
+    That means production gets the exact same code you tested locally. 
+
+
+7) There are two types of dependecies that our app can have.
+   a)dev dependecy- It is gen erally required in development phase.  
+   b)normal dependecy- It is used in production also.
+   npm install -D parcel-- is used to install parcel as dev dependency.
+
+8) "parcel": "^2.16.0" --  ( ^ automatically update its version if there is a minor upgrade.)
+    What's the difference between tilde(~) and caret(^) in package.json?
+
+    Caret ( ^ )-Means: Install the latest minor or patch version, but don’t touch the major version.
+    It’s like saying: “I trust small updates won’t break things, but a new major release might burn my house down.”
+
+    Tilde ( ~ )- Means: Install the latest patch version, but keep the minor version locked.
+    It’s like saying: “I don’t even trust minor updates. Just fix the typos and bugs, nothing fancy.”
+    
+    When we have a major upgrade a lot of this will break into our app, so it is always safe to use ^.
+
+    So the rule of thumb:
+    a) If you’re building an app/project → use ^ (you want to stay reasonably up to date).
+    b) If you’re building a library/package for others → use ~ or even exact versions 
+       (you don’t want your users’ projects breaking because you let a “harmless” update sneak in).
+
+  9) node_modules: Which gets installed is like a database for the npm. 
+                   A directory where npm (or yarn, pnpm, etc.) dumps all the installed dependencies your project needs.
+                   Each library you install (react, express, lodash, etc.) gets its own folder inside node_modules.
+                   Dependencies of dependencies also live in there (Transitive dependency), which is why it grows into a black hole on your disk.
+
+                   Every dependency in node_module will have its package.json.
+
+                   When you run import React from 'react', Node.js looks inside node_modules to find the actual code.     
+                   
+                   Node modules are very heavy so we should always put this in git ignore because if we have our package.json and package.lock.json, we can recreate node_modules.
+                   (#Whatever we can regenerate don't put it on git)
+
+10) How would npm know how many dependencies does parcel has and what dependencies does parcel has? 
+    In the whole package how many package.json we have and how many package.lock.json do we have?
+
+    1. How npm knows Parcel’s dependencies:
+    a) In parcel’s case, its package.json lists all the packages it directly depends on under "dependencies".
+    b) npm reads that file, downloads those dependencies, then repeats the process for each of those dependencies (and their dependencies, and so on).
+       This is known as transitive dependecies.
+   
+    2. How many package.json files exist?
+
+    a) One in your project root → this is your project’s own package.json, where you declare direct dependencies.
+    b) One inside every installed dependency → each library in node_modules has its own package.json
+
+    3. How many package-lock.json files exist?
+    
+    Normally, just one at your project root. package-lock.json is generated only for the main project you’re working on, not for every dependency.
+
+ 11) CDN links is not a preffered way to bring React and React-DOM into our project. Why?

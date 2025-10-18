@@ -1,0 +1,28 @@
+{
+  "name": "react",
+  "version": "1.0.0",
+  "description": "this is react tutorial practice",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/debjitsharma/React_for_practice.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Debjit Sharma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/debjitsharma/React_for_practice/issues"
+  },
+  "homepage": "https://github.com/debjitsharma/React_for_practice#readme",
+  "devDependencies": {
+    "parcel": "^2.16.0"
+  },
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  }
+}
