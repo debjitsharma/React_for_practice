@@ -95,4 +95,100 @@ Many organizations also use npm to manage private development.
     
     Normally, just one at your project root. package-lock.json is generated only for the main project you’re working on, not for every dependency.
 
- 11) CDN links is not a preffered way to bring React and React-DOM into our project. Why?
+11) * To ignite our app: npx parcel index.html
+      npx means ‘execute the package using npm’
+      index.html is the entry point    
+
+
+12) CDN links is not a preffered way to bring React and React-DOM into our project. Why?
+     
+   1) Fetching from CDN is a costly operation. It is fetching from a url. But if we already have react in our node modules, how easy it would be to execute our code.
+        So, we don't want to make another network call to get react.
+   2) "https://unpkg.com/react@18/umd/react.development.js". Now here it is mentioned, react-18, tomorrow if another version of react comes, we'll have to keep changing our url.
+      So, its easier to have it in our package.json. It'll be easier to manage all the dependencies.
+
+
+13) import React from "react";--- here we are importing React from "react" in our node_modules
+
+
+14) Parcel
+     a) Dev Build--- When you’re writing code, you don’t need super-optimized files. Parcel generates a development build that prioritizes speed over optimization. Think of it like rough drafts of your essay—you just need it quick to check if the ideas make sense. 
+                     Production builds are polished and optimized; dev builds are fast and messy but useful.
+
+     b) Local Server-- Parcel spins up a local server for you, so you can preview your project instantly in the browser.
+
+     c) HMR = Hot Module Replacement-As you make changes to your code, Parcel automatically rebuilds the changed files and updates your app in the browser. 
+              By default, Parcel fully reloads the page, but in some cases it may perform Hot Module Replacement (HMR).
+              HMR improves the development experience by updating modules in the browser at runtime without needing a whole page refresh. 
+              This means that application state can be retained as you change small things in your code.
+              Example: you tweak your CSS, the styles update instantly on-screen without losing your React component’s state. Saves insane amounts of time.
+    
+     d) File Watching Algorithm - To support an optimal caching and development experience Parcel utilizes a very fast watcher written in C++ that integrates with low-level file watching functionality of each operating system. Using this watcher Parcel watches every file in your project root (including all node_modules). 
+                                  Based on events and metadata from these files, Parcel determines which files need to be rebuilt.
+       
+     e) Caching - Faster Builds-- Parcel caches everything it builds to disk(.parcel-cache). If you restart the dev server, Parcel will only rebuild files that have changed since the last time it ran. 
+                                  Parcel automatically tracks all of the files, configuration, plugins, and dev dependencies that are involved in your build, and granularly invalidates the cache when something changes.
+                                  This makes incremental builds lightning fast compared to first-time builds.
+
+     f) Image Optimization-- Parcel also includes lossless image optimization for JPEGs and PNGs by default in production mode, which reduces the size of images without affecting their quality.
+                             Optimized images = faster page loads.
+
+     g) Minification--- In production mode, Parcel automatically minifies your code to reduce the file sizes of your bundles. 
+                        Smaller files = faster downloads.
+
+     h) Bundling-- Parcel collects all assets (JS, CSS, images, fonts, etc.) and bundles them into fewer files. Instead of the browser fetching 50 small files, it gets a handful of big ones. 
+                   This reduces HTTP requests and improves load performance.
+
+     i) Compression -- Parcel applies compression algorithms like gzip or brotli to shrink bundled files further before sending them to the browser. 
+                    For instance, a 500KB JS file might shrink to ~150KB over the network. That’s free speed for your users.
+     
+    
+     j) Consistent Hashing-- Parcel adds unique hashes to filenames (like main.4f3d2.js). If the file changes, the hash changes. Browsers then know it’s a new file and won’t use the cached old one. 
+                             This avoids the classic “I fixed the bug but users still see the old version” headache.
+
+     k) Code Splitting--Instead of making one giant bundle, Parcel splits the code intelligently. Example: the homepage loads minimal JS, and extra chunks (like about.js or dashboard.js) 
+                        load only when the user visits those pages. Reduces initial load time and improves UX.
+
+     l) Differential Bundling - Differential bundling is the idea of shipping multiple versions of your code for different targets, and allowing the browser to choose the most optimal one to download.
+                                Modern browsers support <script type="module">, which in addition to supporting import and export syntax, also supports other modern syntax such as classes, arrow functions, async/await, and more.
+                                Modern browsers can handle ES6+ (ECMAScript 2015 (aka ES6) and everything that came after it.), but older ones (like IE11) choke. Parcel automatically generates two bundles: one with modern syntax (for Chrome, Edge, etc.) and one transpiled (for old browsers). 
+                                It then serves the right version based on the browser. Saves you from manually maintaining compatibility.
+
+     m) Diagnostic-- Parcel’s error messages are actually helpful. Instead of dumping a 200-line stack trace, 
+                     it highlights the error with context, line number, and possible fixes.
+
+     n) Error Handling--When something breaks, Parcel shows a clear overlay in your browser and logs details in the terminal. 
+                        It doesn’t just crash and leave you guessing. This makes debugging much smoother.
+
+     o) HTTPs--  Parcel can serve your app locally with HTTPS. Useful if you’re testing features like service workers, payment gateways, or APIs that demand secure connections. 
+                 No fiddling with self-signed certificates manually.
+
+     p) Tree Shaking (remove unused code)-- Parcel analyzes imports and eliminates dead code.  
+                                               Result: smaller bundles and faster load times.
+ 
+     q) Different dev and production bundles-- a) Dev bundles: fast, not optimized, with HMR and source maps for debugging.
+                                               b) Prod bundles: heavily optimized, minified, tree-shaken, compressed, differential, and cache-busted.
+                                               This separation ensures you get fast feedback during dev, and efficient performance in production.
+
+
+15)* dist: It keeps the files minified for us. When bundler builds the app, the build goes into a folder called dist.
+            The `/dist` folder contains the minimized and optimised version the source code.
+            Along with the minified code, the /dist folder also comprises of all the compiled modules that may or may not be used with other systems.
+            a) When we run command:
+               npx parcel index.html
+               This will create a faster development version of our project and serves it on the server.
+            
+            b) When we tell parcel to make a production build:
+               npx parcel build index.html 
+               It creates a lot of things, minify your file. And the parcel will build all the production files to the dist folder. 
+
+16) Transitive Dependencies :We have our package manager which takes care of our transitive dependencies of our code.
+                            If we’ve to build a production ready app which uses all optimisations (like minify, bundling, compression, etc), 
+                            we need to do all these.
+                            But we can’t do this alone, we need some dependencies on it. Those dependencies are also dependent on other dependencies.
+
+17) * Browserslist: Browserslist is a tool that specifies which browsers should be supported/compatible in your frontend app.
+                    It makes our code compatible for a lot of browsers.  
+
+                    In package.json file do: "browserlist": ["last 2 versions"]                          
+

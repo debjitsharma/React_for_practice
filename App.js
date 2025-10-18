@@ -1,10 +1,9 @@
-const parent= React.createElement("div",{id:"parent"},
-[React.createElement("div",{id:"child1"},
-[React.createElement("h1",{},"I'm h1 tag"),
-React.createElement("h2",{},"I'm h2 tag"),]),
-React.createElement("div",{id:"child2"},
-[React.createElement("h1",{},"I'm h1 tag"),
-React.createElement("h2",{},"I'm h2 tag"),])]);
-console.log(parent);
+// import React from "react";
+import ReactDOM from "react-dom/client";
+const a=100;
+const Bravo= () => <h1 className="my name" tabIndex="5">Bravo is here</h1>
+const dev= (<span>go go power rangers<Bravo/></span>)
+const Parent= () => (<><Bravo/><h1 className="my name" tabIndex="5">This is me Nested Function Componenet</h1></>)
+const Heading = () => (<><Parent/>{dev} <h1>This is me Function Componenet</h1></>);
 const root=ReactDOM.createRoot(document.getElementById("root"));
-root.render(parent);
+root.render(<Heading/>);

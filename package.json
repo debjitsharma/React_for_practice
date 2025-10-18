@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "this is react tutorial practice",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "boom": "parcel index.html",
+    "build": "parcel build index.html"
+
   },
   "repository": {
     "type": "git",
@@ -23,6 +26,9 @@
   },
   "dependencies": {
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  }
+    "react-dom": "^19.2.0"
+  },
+  "browserlist": [
+    "last 2 versions"
+  ]
 }
